@@ -14,7 +14,6 @@ def part1():
 
 def part2():
     contents = read(this_filename)
-    
     return None
 
 def main():
