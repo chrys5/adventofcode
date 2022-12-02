@@ -1,5 +1,3 @@
-import numpy as np
-
 this_filename = '3.txt'
 
 def read(filename: str):

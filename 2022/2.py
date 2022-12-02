@@ -1,5 +1,3 @@
-import numpy as np
-
 def part1() -> int:
     file = open('2.txt', 'r')
     input = []

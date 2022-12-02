@@ -1,6 +1,5 @@
 #practice
 
-import numpy as np
 from collections import deque
 
 this_filename = 'practice.txt'
