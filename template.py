@@ -1,6 +1,5 @@
 from typing import List
 import re
-import numpy as np
 
 
 this_filename = 'template.txt'
