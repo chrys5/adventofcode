@@ -1,6 +1,5 @@
 from collections import deque
 import re
-import string
 
 this_filename = '5.txt'
 
