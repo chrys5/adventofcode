@@ -1,5 +1,6 @@
 from typing import List
 import re
+import numpy as np
 
 
 this_filename = 'template.txt'
@@ -7,12 +8,13 @@ this_filename = 'template.txt'
 
 def parse(filename: str, delimiters: List[str] = [' ']):
     """
-    parse txt file into words seperated by a given list of delimiters (default: space) \n
+    parse txt file into a 2D jagged array of words for each line, using a given list of delimiters (default: space) \n
     only works for ascii characters i think
     """
-    contents = None
+    contents = []
     with open(filename, 'r') as f:
-        contents = [word for line in f.readlines() for word in re.split('|'.join(map(re.escape, delimiters)), line.strip()) if word != '']
+        for line in [line.strip() for line in f.readlines()]:
+            contents.append([word for word in re.split('|'.join(map(re.escape, delimiters)), line) if len(word) > 0])
     return contents
 
 
