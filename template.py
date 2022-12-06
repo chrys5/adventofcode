@@ -8,9 +8,9 @@ this_filename = 'template.txt'
 def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool = True, delimiters: List[str] = [' ']):
     """
     Parse txt file into a 2D jagged array of words for each line.\n
-    Use a given list of delimiters (default: space).\n
-    Specify start and end line numbers (inclusive), using 1-indexed line numbering. (default: all lines).\n
-    Pass raw lines with no splitting if needed. (default: split enabled)
+    OPTIONAL: Specify start and end line numbers (inclusive), using 1-indexed line numbering. (default: all lines)\n
+    OPTIONAL: Pass raw lines with no splitting if needed. (default: split enabled)\n
+    OPTIONAL: Use a given list of delimiters for splitting. (default: space)\n
     """
     contents = []
 
