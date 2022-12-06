@@ -47,7 +47,7 @@ def part2(contents: List[str]):
 
 
 def main():
-    contents = read(this_filename, start=1, stop=-1, splitting_enabled=False, delimiters=[' ']) # CHANGE AS NEEDED
+    contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
     part1_ans = part1(contents)
     part2_ans = part2(contents)
     print(part1_ans)
