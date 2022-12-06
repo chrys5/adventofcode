@@ -52,8 +52,7 @@ def main():
     part2_ans = part2(contents)
     print(part1_ans)
     print(part2_ans)
-    print(contents)
-    print(len(contents))
+
 
 if __name__ == "__main__":
     main()
