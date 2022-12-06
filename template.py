@@ -1,16 +1,15 @@
-from typing import List, Union, Tuple
+from typing import List
 import re
 
 
 this_filename = 'template.txt'
 
 
-def read(filename: str, delimiters: List[str] = [' '], range: Union[int, Tuple[int, int]] = 0, splitting_enabled: bool = True):
+def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool = True, delimiters: List[str] = [' ']):
     """
     Parse txt file into a 2D jagged array of words for each line.\n
     Use a given list of delimiters (default: space).\n
-    Specify range of line numbers if needed, using 1-indexed line numbering.\n
-    For single values, positive range means [0:range] and negative range means [range:len(lines)] (default: all lines).\n
+    Specify start and end line numbers (inclusive), using 1-indexed line numbering. (default: all lines).\n
     Pass raw lines with no splitting if needed. (default: split enabled)
     """
     contents = []
@@ -18,13 +17,9 @@ def read(filename: str, delimiters: List[str] = [' '], range: Union[int, Tuple[i
     with open(filename, 'r') as f:
         lines = [line.strip() for line in f.readlines()]
 
-        if type(range) is int:
-            if range > 0:
-                lines = lines[:range-1]
-            if range < 0:
-                lines = lines[-range-1:]
-        else:
-            lines = lines[range[0]-1:range[1]-1]
+        if stop < 1:
+            stop = len(lines)
+        lines = lines[start-1:stop]
 
         if splitting_enabled:
             for line in lines:
@@ -52,12 +47,13 @@ def part2(contents: List[str]):
 
 
 def main():
-    contents = read(this_filename, delimiters=[' '], range=0, splitting_enabled=True) # CHANGE AS NEEDED
+    contents = read(this_filename, start=1, stop=-1, splitting_enabled=False, delimiters=[' ']) # CHANGE AS NEEDED
     part1_ans = part1(contents)
     part2_ans = part2(contents)
     print(part1_ans)
     print(part2_ans)
-    
+    print(contents)
+    print(len(contents))
 
 if __name__ == "__main__":
     main()
