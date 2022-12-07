@@ -45,40 +45,34 @@ def part1(contents: List[str]):
     global root_dir
     root_dir = Dir(None, '/')
     curr_dir = root_dir
-    r = 1
-    while r < len(contents):
-        line = contents[r]
-        if line[0] == '$':
-            if line[1] == 'cd':
-                if line[2] == '..':
+    for line in contents:
+        if line[0:2] == ['$', 'cd']:
+            match line[2]:
+                case '..':
                     curr_dir = curr_dir.parent
-                elif line[2] == '/':
+                case '/':
                     curr_dir = root_dir
-                else:
-                    curr_dir = curr_dir.subdirs[line[2]]
-            
-            if line[1] == 'ls':
-                r += 1
-                while r < len(contents) and contents[r][0] != '$':
-                    line = contents[r]
-                    if line[0] == 'dir': #dir
-                        if not line[1] in curr_dir.subdirs:
-                            curr_dir.subdirs[line[1]] = Dir(curr_dir, line[1])
-                    else: #file
-                        if not line[1] in curr_dir.files:
-                            curr_dir.files.add(line[1])
-                            dir_up = curr_dir
-                            while (dir_up != None):
-                                dir_up.size += int(line[0])
-                                dir_up = dir_up.parent
-                    r += 1
-                r -= 1
-        r += 1
+                case new_dir_name:
+                    curr_dir = curr_dir.subdirs[new_dir_name]
+        elif line[0:2] == ['$', 'ls']:
+            continue
+        elif line[0] == 'dir':
+            new_dir_name = line[1]
+            if not new_dir_name in curr_dir.subdirs:
+                curr_dir.subdirs[new_dir_name] = Dir(curr_dir, new_dir_name)
+        else:
+            file_size, file_name = line
+            if not file_name in curr_dir.files:
+                curr_dir.files.add(line[1])
+                dir_up = curr_dir
+                while (dir_up != None):
+                    dir_up.size += int(file_size)
+                    dir_up = dir_up.parent
     
     sum = 0
     queue = deque()
     queue.append(root_dir)
-    while queue: #bfs
+    while queue:
         curr_dir = queue.popleft()
         if curr_dir.size <= 100000:
             sum += curr_dir.size
@@ -90,7 +84,7 @@ def part2(contents: List[str]):
     sizes = []
     queue = deque()
     queue.append(root_dir)
-    while queue: #bfs
+    while queue:
         curr_dir = queue.popleft()
         sizes.append(curr_dir.size)
         queue.extend(curr_dir.subdirs.values())
