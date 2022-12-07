@@ -1,21 +1,25 @@
 from typing import List
 import re
+import os
+
 from collections import deque
 
 
-this_filename = '2022\\7.txt'
+this_filename = '7.txt'
 
 
 def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool = True, delimiters: List[str] = [' ']):
     """
-    Parse txt file into a 2D jagged array of words for each line.\n
+    Parse txt file into a 2D jagged array of words for each line. txt file should be in same directory as this one.\n
     OPTIONAL: Specify start and end line numbers (inclusive), using 1-indexed line numbering. (default: all lines)\n
     OPTIONAL: Pass raw lines with no splitting if needed. (default: split enabled)\n
     OPTIONAL: Use a given list of delimiters for splitting. (default: space)\n
     """
     contents = []
 
-    with open(filename, 'r') as f:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    with open(os.path.join(dir_path, filename), 'r') as f:
         lines = [line.strip() for line in f.readlines()]
 
         if stop < 1:

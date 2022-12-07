@@ -1,5 +1,6 @@
 from typing import List
 import re
+import os
 
 
 this_filename = 'template.txt'
@@ -14,7 +15,9 @@ def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool 
     """
     contents = []
 
-    with open(filename, 'r') as f:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    with open(os.path.join(dir_path, filename), 'r') as f:
         lines = [line.strip() for line in f.readlines()]
 
         if stop < 1:
