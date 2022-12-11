@@ -1,5 +1,5 @@
 def part1() -> int:
-    file = open('1.txt', 'r')
+    file = open('01.txt', 'r')
     max_sum = 0
     curr_sum = 0
     
@@ -15,7 +15,7 @@ def part1() -> int:
     return max_sum
 
 def part2() -> int:
-    file = open('1.txt', 'r')
+    file = open('01.txt', 'r')
     curr_sum = 0
     sums = []
     

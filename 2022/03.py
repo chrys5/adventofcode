@@ -1,4 +1,4 @@
-this_filename = '3.txt'
+this_filename = '03.txt'
 
 def read(filename: str):
     contents = None

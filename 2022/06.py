@@ -2,7 +2,7 @@ from typing import List
 import re
 
 
-this_filename = '6.txt'
+this_filename = '06.txt'
 
 
 def parse(filename: str, delimiters: List[str] = [' ']):

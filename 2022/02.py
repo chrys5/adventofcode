@@ -1,5 +1,5 @@
 def part1() -> int:
-    file = open('2.txt', 'r')
+    file = open('02.txt', 'r')
     input = []
     idx = {'A': 0, 'B': 1, 'C': 2, 'X': 0, 'Y': 1, 'Z': 2}
     outcomes = [[3, 6, 0],
@@ -17,7 +17,7 @@ def part1() -> int:
     return sum
 
 def part2() -> int:
-    file = open('2.txt', 'r')
+    file = open('02.txt', 'r')
     input = []
     idx = {'A': 0, 'B': 1, 'C': 2, 'X': 0, 'Y': 1, 'Z': 2}
     
