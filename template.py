@@ -51,10 +51,11 @@ def part2(contents: List[str]):
 
 def main():
     contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
-    part1_ans = part1(contents)
-    print("Part 1: " + str(part1_ans))
-    part2_ans = part2(contents)
-    print("Part 2: " + str(part2_ans))
+    
+    print("Part 1:")
+    print(part1(contents))
+    print("\nPart 2:")
+    print(part2(contents))
 
 
 if __name__ == "__main__":
