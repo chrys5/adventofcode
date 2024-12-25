@@ -54,7 +54,7 @@ def part1(contents: List[str]):
     }
     while contents[i][j] != '0':
         pos_set.add((i, j))
-        if contents[i + dir[0]][j + dir[1]] == '#':
+        while contents[i + dir[0]][j + dir[1]] == '#':
             dir = next_dir[dir]
         i += dir[0]
         j += dir[1]
@@ -80,7 +80,7 @@ def part1_2(contents: List[str]):
     }
     while contents[i][j] != '0':
         pos_set.add((i, j))
-        if contents[i + dir[0]][j + dir[1]] == '#':
+        while contents[i + dir[0]][j + dir[1]] == '#':
             dir = next_dir[dir]
         i += dir[0]
         j += dir[1]
@@ -93,8 +93,6 @@ def part2(contents: List[str]):
     """
     pos_set_pt1 = part1_2(contents)
 
-    len_contents = len(contents)
-    len_contents0 = len(contents[0])
     contents = np.pad(np.array(contents), 1, mode='constant', constant_values='0')
     start_pos = np.where(contents == '^')
     start_pos = list(zip(start_pos[0], start_pos[1]))[0]
@@ -115,7 +113,7 @@ def part2(contents: List[str]):
         }
         while contents[i][j] != '0' and not (i, j, dir) in pos_set:
             pos_set.add((i, j, dir))
-            if contents[i + dir[0]][j + dir[1]] == '#':
+            while contents[i + dir[0]][j + dir[1]] == '#':
                 dir = next_dir[dir]
             i += dir[0]
             j += dir[1]

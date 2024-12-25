@@ -1,12 +1,14 @@
 from typing import List
 import re
 import os
-
 import numpy as np
 import itertools
 
 
-this_filename = '9.txt'
+import warnings
+warnings.filterwarnings("error", category=RuntimeWarning)
+
+this_filename = '7.txt'
 
 
 def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool = True, delimiters: List[str] = [' ']):
@@ -40,20 +42,51 @@ def part1(contents: List[str]):
     """
     TODO: part 1 solution
     """
+    ret = 0
+    for row in contents:
+        result = int(row[0])
+        factors = [int(a) for a in row[2:]]
+        for operands in itertools.product([False, True], repeat=len(factors)):
+            sum = int(row[1])
+            for is_add, factor in zip(operands, factors):
+                sum = sum+factor if is_add else sum*factor
+                if sum > result:
+                    break
+            if sum == result:
+                ret += result
+                break
 
-    return None
+    return ret
 
 
 def part2(contents: List[str]):
     """
     TODO: part 2 solution
     """
+    ret = 0
+    for row in contents:
+        result = int(row[0])
+        factors = [int(a) for a in row[2:]]
+        for operands in itertools.product([0, 1, 2], repeat=len(factors)):
+            sum = int(row[1])
+            for op, factor in zip(operands, factors):
+                if op == 0:
+                    sum += factor
+                elif op == 1:
+                    sum *= factor
+                else:
+                    sum = sum*np.power(10, np.floor(np.log10(factor))+1) + factor
+                if sum > result:
+                    break
+            if sum == result:
+                ret += result
+                break
 
-    return None
+    return ret
 
 
 def main():
-    contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
+    contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ', ':']) # CHANGE AS NEEDED
     
     print("Part 1:")
     print(part1(contents))

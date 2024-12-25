@@ -3,8 +3,6 @@ import re
 import os
 
 import numpy as np
-import itertools
-
 
 this_filename = '9.txt'
 
@@ -40,6 +38,16 @@ def part1(contents: List[str]):
     """
     TODO: part 1 solution
     """
+    contents = np.array(contents).astype(int).reshape((len(contents[0]),))
+    block_szs = contents[0:len(contents):2]
+    free_space = contents[1:len(contents):2]
+    disk_space = np.zeros((np.sum(contents),))
+
+    i_begin = 0
+    i_end = len(block_szs) - 1
+    i_disk = 0
+    while True:
+        # populate 
 
     return None
 
@@ -53,7 +61,7 @@ def part2(contents: List[str]):
 
 
 def main():
-    contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
+    contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=['']) # CHANGE AS NEEDED
     
     print("Part 1:")
     print(part1(contents))
