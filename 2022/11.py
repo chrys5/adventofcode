@@ -40,7 +40,8 @@ class Monkey:
         self.items = None
         self.divide_by_3 = None
         self.operation = None
-        self.test = None
+        self.op_const = None
+        self.divisor = None
         self.if_true = None
         self.if_false = None
         self.inspections = 0
@@ -118,8 +119,11 @@ def part2(contents: List[str]):
     for monkey in monkeys:
         monkey.divide_by_3 = False
     
+    '''
+    TODO: add modular arithmetic
+    '''
     for round_num in range(10000):
-        print(str(round((round_num+1)/100, 2)) + '%', end='\r')
+        print(str(round((round_num+1)/100, 2)) + '%', end='\r') 
 
         for curr_monkey in monkeys:
             while curr_monkey.items:
@@ -140,11 +144,12 @@ def part2(contents: List[str]):
 
 def main():
     contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ', ',']) # CHANGE AS NEEDED
-    part1_ans = part1(contents)
-    print("Part 1: " + str(part1_ans))
-    part2_ans = part2(contents)
-    print("Part 2: " + str(part2_ans))
 
+    print("Part 1:")
+    print(part1(contents))
+    print("\nPart 2:")
+    print(part2(contents))
+    
 
 if __name__ == "__main__":
     main()
