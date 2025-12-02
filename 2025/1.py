@@ -2,15 +2,15 @@ from typing import List
 import re
 import os
 
+from click import command
 import numpy as np
 import itertools
 
 
-# filename should be name of this .py file with .txt extension
 this_filename = os.path.splitext(os.path.basename(__file__))[0] + '.txt'
 
 
-def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool = True, delimiters: List = [' ']):
+def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool = True, delimiters: List[str] = [' ']):
     """
     Parse txt file into a 2D jagged array of words for each line.\n
     OPTIONAL: Specify start and end line numbers (inclusive), using 1-indexed line numbering. (default: all lines)\n
@@ -35,29 +35,57 @@ def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool 
             contents = lines
 
     # ADDITIONAL PROCESSING HERE IF NEEDED
-    
+    for i in range(len(contents)):
+        contents[i] = (contents[i][0], int(contents[i][1:]))
 
     return contents
 
 
-def part1(contents: List):
+def part1(contents: List[tuple]):
     """
     TODO: part 1 solution
     """
 
-    return None
+    dial = 50
+    ret = 0
+    for dir, value in contents:
+        if dir == 'R':
+            dial = (dial + value) % 100
+        else:
+            dial = (dial - value) % 100
+        if dial == 0:
+            ret += 1
+    return ret
 
 
-def part2(contents: List):
+def part2(contents: List[tuple]):
     """
     TODO: part 2 solution
     """
 
-    return None
+    dial = 50
+    ret = 0
+    for dir, value in contents:
+        new_val = 0
+        if dir == 'R':
+            new_val = dial + value
+        else:
+            new_val = dial - value
+        
+        if new_val <= 0:
+            ret += (-new_val // 100)
+            if dial != 0:
+                ret += 1
+        elif new_val >= 100:
+            ret += new_val // 100
+        
+        dial = new_val % 100
+        # print(command, value, dial, ret)
+    return ret
 
 
 def main():
-    contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
+    contents = read(this_filename, start=1, stop=-1, splitting_enabled=False, delimiters=[' ']) # CHANGE AS NEEDED
     
     print("Part 1:")
     print(part1(contents))
