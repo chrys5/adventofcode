@@ -73,7 +73,6 @@ def part2(contents: List):
 
             if len(monotonic_stack) < 12:
                 monotonic_stack.append(num)
-            i += 1
 
         line_max = int(''.join(monotonic_stack))
         # print(line_max)
