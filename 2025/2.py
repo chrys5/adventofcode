@@ -1,6 +1,7 @@
 from typing import List
 import re
 import os
+import time
 
 import numpy as np
 import itertools
@@ -122,9 +123,19 @@ def main():
     contents = read(this_filename, start=1, stop=-1, splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
     
     print("Part 1:")
-    print(part1(contents))
+    start_time = time.perf_counter()
+    result1 = part1(contents)
+    end_time = time.perf_counter()
+    print(result1)
+    print(f"Runtime: {(end_time - start_time)*1000:.3f} ms")
+    
     print("\nPart 2:")
-    print(part2(contents))
+    start_time = time.perf_counter()
+    result2 = part2(contents)
+    end_time = time.perf_counter()
+    print(result2)
+    print(f"Runtime: {(end_time - start_time)*1000:.3f} ms")
+
 
 
 if __name__ == "__main__":
