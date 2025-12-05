@@ -83,9 +83,13 @@ def part2(contents: List):
 
 
 def main():
+    print("\nParsing/preprocessing input...")
+    start_time = time.perf_counter()
     contents = read(this_filename, start=1, stop=-1, splitting_enabled=False, delimiters=[' ']) # CHANGE AS NEEDED
+    end_time = time.perf_counter()
+    print(f"Runtime: {(end_time - start_time)*1000:.3f} ms")
     
-    print("Part 1:")
+    print("\nPart 1:")
     start_time = time.perf_counter()
     result1 = part1(contents)
     end_time = time.perf_counter()

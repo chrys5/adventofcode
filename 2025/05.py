@@ -36,44 +36,62 @@ def read(filename: str, start: int = 1, stop: int = -1, splitting_enabled: bool 
             contents = lines
 
     # ADDITIONAL PROCESSING HERE IF NEEDED
-    
+    ranges = []
+    aval = []
+    for row in contents:
+        if '-' in row:
+            ranges.append(tuple(int(n) for n in row.split('-')))
+        elif len(row) > 0:
+            aval.append(int(row))
 
-    return contents
+    return sorted(ranges), aval
 
 
-def part1(contents: List):
+def part1(ranges, aval):
     """
     TODO: part 1 solution
     """
 
-    return None
+    total = 0
+    for n in aval:
+        for low, high in ranges:
+            if low <= n <= high:
+                total += 1
+                break
+    return total
 
 
-def part2(contents: List):
+def part2(ranges):
     """
     TODO: part 2 solution
     """
 
-    return None
+    total_fresh = 0
+    prev_high = -999999
+    for low, high in ranges:
+        overlap = max(0, prev_high + 1 - low)
+        prev_high = max(prev_high, high)
+        total_fresh += max(0, high + 1 - low - overlap)
+    return total_fresh
 
 
 def main():
     print("\nParsing/preprocessing input...")
     start_time = time.perf_counter()
-    contents = read(this_filename, start=1, stop=-1, splitting_enabled=False, delimiters=[' ']) # CHANGE AS NEEDED
+    ranges, aval = read(this_filename, start=1, stop=-1, splitting_enabled=False, delimiters=[' ']) # CHANGE AS NEEDED
     end_time = time.perf_counter()
     print(f"Runtime: {(end_time - start_time)*1000:.3f} ms")
     
     print("\nPart 1:")
     start_time = time.perf_counter()
-    result1 = part1(contents)
+    result1 = part1(ranges, aval)
     end_time = time.perf_counter()
     print(result1)
     print(f"Runtime: {(end_time - start_time)*1000:.3f} ms")
     
     print("\nPart 2:")
     start_time = time.perf_counter()
-    result2 = part2(contents)
+    result2 = part2(ranges)
     end_time = time.perf_counter()
     print(result2)
     print(f"Runtime: {(end_time - start_time)*1000:.3f} ms")
