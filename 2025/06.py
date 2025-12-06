@@ -51,17 +51,75 @@ def part1():
     contents = read(this_filename, start=1, stop=-1, strip=True, 
                     splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
 
-    return None
+    height = len(contents) - 1
+    width = len(contents[0])
+
+    for h in range(height):
+        for w in range(width):
+            contents[h][w] = int(contents[h][w])
+
+    mult = [sign == '*' for sign in contents[-1]]
+    sum = 0
+    for w in range(width):
+        if mult[w]:
+            result = 1
+            for h in range(height):
+                result *= contents[h][w]
+        else:
+            result = 0
+            for h in range(height):
+                result += contents[h][w]
+        sum += result
+
+    return sum
 
 
 def part2():
     """
     TODO: part 2 solution
     """
-    contents = read(this_filename, start=1, stop=-1, strip=True, 
-                    splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
+    contents = read(this_filename, start=1, stop=-1, strip=False, 
+                    splitting_enabled=True, delimiters=['']) # CHANGE AS NEEDED
 
-    return None
+    height = len(contents) - 1
+    width = len(contents[0])
+    bottom_row = contents[-1]
+
+    col_low = 0
+    col_high = 1
+
+    # look for width of column first
+    sum = 0
+    while col_low < width:
+        mult = bottom_row[col_low] == '*'
+        while col_high < width and bottom_row[col_high] not in {'*', '+'}:
+            col_high += 1
+        if col_high != width:
+            col_high -= 1
+
+        nums = []
+        for w in range(col_low, col_high):
+            curr_num = ''
+            for h in range(height):
+                if contents[h][w].isnumeric():
+                    curr_num += contents[h][w]
+            nums.append(int(curr_num))
+        
+        if mult:
+            result = 1
+            for num in nums:
+                result *= num
+        else:
+            result = 0
+            for num in nums:
+                result += num
+
+        sum += result
+
+        col_low = col_high + 1
+        col_high += 2
+
+    return sum
 
 
 def main():
