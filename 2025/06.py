@@ -1,55 +1,22 @@
 from typing import List
 import re
 import os
+import sys
 import time
 
-import numpy as np
-import itertools
+from utils import read_file
 
+# filename should be absolute path name of this .py file with .txt extension
+this_filename = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), 
+    os.path.splitext(os.path.basename(__file__))[0] + '.txt')
 
-# filename should be name of this .py file with .txt extension
-this_filename = os.path.splitext(os.path.basename(__file__))[0] + '.txt'
-
-
-def read(filename: str, start: int = 1, stop: int = -1, strip: bool = True, 
-         splitting_enabled: bool = True, delimiters: List = [' ']):
-    """
-    Parse txt file into a 2D jagged array of words for each line.\n
-    OPTIONAL: Specify start and end line numbers (inclusive), using 1-indexed line numbering. (default: all lines)\n
-    OPTIONAL: Pass raw lines with no splitting if needed. (default: split enabled)\n
-    OPTIONAL: Use a given list of delimiters for splitting. (default: space)\n
-    """
-    contents = []
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-
-    with open(os.path.join(dir_path, filename), 'r') as f:
-        if strip:
-            lines = [line.strip() for line in f.readlines()]
-        else:
-            lines = f.readlines()
-            for i in range(len(lines)):
-                lines[i] = lines[i].rstrip('\n')
-
-    if stop < 1:
-        stop = len(lines)
-    lines = lines[start-1:stop]
-
-    if splitting_enabled:
-        for line in lines:
-            contents.append([word for word in re.split('|'.join(map(re.escape, delimiters)), line) if word])
-    else:
-        contents = lines
-
-    return contents
-
-
+# -------------------------------------------------------------------------
 def part1():
     """
     TODO: part 1 solution
     """
-    contents = read(this_filename, start=1, stop=-1, strip=True, 
-                    splitting_enabled=True, delimiters=[' ']) # CHANGE AS NEEDED
+    contents = read_file(this_filename, strip=False, delimiters=[' '], line_range=(None, None)) # CHANGE AS NEEDED
 
     height = len(contents) - 1
     width = len(contents[0])
@@ -78,8 +45,7 @@ def part2():
     """
     TODO: part 2 solution
     """
-    contents = read(this_filename, start=1, stop=-1, strip=False, 
-                    splitting_enabled=True, delimiters=['']) # CHANGE AS NEEDED
+    contents = read_file(this_filename, strip=False, delimiters=None, line_range=(None, None)) # CHANGE AS NEEDED
 
     height = len(contents) - 1
     width = len(contents[0])
@@ -120,7 +86,7 @@ def part2():
         col_high += 2
 
     return sum
-
+# -------------------------------------------------------------------------
 
 def main():
     print("\nPart 1:")
