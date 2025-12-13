@@ -36,7 +36,8 @@ day="${day%.txt}"
 
 # pad numeric day to 2 digits
 if [[ "$day" =~ ^[0-9]+$ ]]; then
-  day=$(printf "%02d" "$day")
+  # force base-10 interpretation to avoid octal parsing of leading-zero numbers (e.g. 08)
+  day=$(printf "%02d" "$((10#$day))")
 fi
 
 target_dir="$year"
