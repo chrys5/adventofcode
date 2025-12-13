@@ -2,3 +2,4 @@
 adventofcode.egg-info/
 __pycache__/
 .vscode/
+*.py[cod]
