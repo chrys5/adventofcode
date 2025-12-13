@@ -11,8 +11,8 @@ this_filename = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), 
     os.path.splitext(os.path.basename(__file__))[0] + '.txt')
 
-# number of closest pairs to consider
-k = 1000
+
+
 
 # -------------------------------------------------------------------------
 def part1():
@@ -22,7 +22,8 @@ def part1():
     contents = read_file(this_filename, strip=False, delimiters=[','], line_range=(None, None)) # CHANGE AS NEEDED
 
     N = len(contents)
-    k2 = 3    # number of largest circuits to find
+    k = 1000    # number of closest pairs to consider
+    k2 = 3      # number of largest circuits to find
 
     box_locations = []
     for content in contents:
@@ -119,14 +120,6 @@ def part2():
                 if root_2 == global_root:
                     global_root = root_1
         
-    # do first k connections
-    for _ in range(k):
-        _, i, j = heapq.heappop(pair_dists)
-        union(i, j)
-        visited.add(i)
-        visited.add(j)
-
-    # continue until all nodes connected
     last_connection = pair_dists[0]
     while size[global_root] < N:
         _, i, j = heapq.heappop(pair_dists)
