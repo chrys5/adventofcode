@@ -53,7 +53,6 @@ def part2():
     rectangles.sort(key=lambda rect: 
                     -(abs(rect[0][0] - rect[1][0]) + 1) * (abs(rect[0][1] - rect[1][1]) + 1))
 
-    # test every box. if box is intersected by any edge, it's not valid
     edges = []
     for i in range(1, N):
         edges.append((coords[i-1], coords[i]))
@@ -61,6 +60,7 @@ def part2():
     # sort edges by length descending
     edges.sort(key=lambda edge: -max(abs(edge[0][0] - edge[1][0]), abs(edge[0][1] - edge[1][1])))
 
+    # test every box. if box is intersected by any edge, it's not valid
     for rectangle in rectangles:
         corner_1_x, corner_1_y = rectangle[0]
         corner_2_x, corner_2_y = rectangle[1]
