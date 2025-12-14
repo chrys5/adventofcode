@@ -42,37 +42,48 @@ def part2():
     coords = []
     for content in contents:
         coords.append(tuple(int(coord) for coord in content))
+    rectangles = []
+    for i in range(N):
+        for j in range(i+1, N):
+            rectangles.append((
+                (min(coords[i][0], coords[j][0]), min(coords[i][1], coords[j][1])),
+                (max(coords[i][0], coords[j][0]), max(coords[i][1], coords[j][1]))
+            ))
+    # sort rectangles by area descending
+    rectangles.sort(key=lambda rect: 
+                    -(abs(rect[0][0] - rect[1][0]) + 1) * (abs(rect[0][1] - rect[1][1]) + 1))
 
     # test every box. if box is intersected by any edge, it's not valid
     edges = []
     for i in range(1, N):
         edges.append((coords[i-1], coords[i]))
     edges.append((coords[N-1], coords[0]))
+    # sort edges by length descending
+    edges.sort(key=lambda edge: -max(abs(edge[0][0] - edge[1][0]), abs(edge[0][1] - edge[1][1])))
 
-    max_rectangle = 0
-    for i in range(N):
-        corner_1_x, corner_1_y = coords[i]
-        for j in range(i+1, N):
-            corner_2_x, corner_2_y = coords[j]
-            valid = True
-            for edge in edges:
-                edge_1_x, edge_1_y = edge[0]
-                edge_2_x, edge_2_y = edge[1]
-                
-                # check if edge is outside of rectangle
-                if (max(edge_1_x, edge_2_x) <= min(corner_1_x, corner_2_x) or   # right
-                    min(edge_1_x, edge_2_x) >= max(corner_1_x, corner_2_x) or   # left
-                    max(edge_1_y, edge_2_y) <= min(corner_1_y, corner_2_y) or   # down
-                    min(edge_1_y, edge_2_y) >= max(corner_1_y, corner_2_y)):    # up
-                    continue
-                else:
-                    valid = False
-                    break
-            if valid:
-                max_rectangle = max(max_rectangle, 
-                                    (abs(corner_1_x - corner_2_x) + 1) * (abs(corner_1_y - corner_2_y) + 1))
+    for rectangle in rectangles:
+        corner_1_x, corner_1_y = rectangle[0]
+        corner_2_x, corner_2_y = rectangle[1]
+        valid = True
+
+        for edge in edges:
+            edge_1_x, edge_1_y = edge[0]
+            edge_2_x, edge_2_y = edge[1]
+            
+            # check if edge is outside of rectangle
+            if (max(edge_1_x, edge_2_x) <= min(corner_1_x, corner_2_x) or   # right
+                min(edge_1_x, edge_2_x) >= max(corner_1_x, corner_2_x) or   # left
+                max(edge_1_y, edge_2_y) <= min(corner_1_y, corner_2_y) or   # down
+                min(edge_1_y, edge_2_y) >= max(corner_1_y, corner_2_y)):    # up
+                continue
+            else:
+                valid = False
+                break
+
+        if valid:
+            return (abs(corner_1_x - corner_2_x) + 1) * (abs(corner_1_y - corner_2_y) + 1)
     
-    return max_rectangle
+    return 0
 # -------------------------------------------------------------------------
 
 def main():
