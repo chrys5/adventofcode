@@ -106,7 +106,7 @@ def part2():
         joltage is a vector of target joltages
     
     objective: minimize cx (sum of x)
-        c is vertical vector of 1s
+        c is a vector of 1s
 
     known bounds: 0 <= x <= max(joltage)
     """
